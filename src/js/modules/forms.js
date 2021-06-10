@@ -1,16 +1,20 @@
 export default class Forms {
 	constructor(forms, idx = 0) {
-		this.form = document.querySelectorAll(forms)[idx];
-		this.inputs = this.form.querySelectorAll('input');
-		this.message = {
-			loading: 'Загрузка...',
-			success: 'Спасибо! Скоро мы с вами свяжемся',
-			failure: 'Что-то пошло не так...',
-			spinner: 'assets/img/spinner.gif',
-			ok: 'assets/img/ok.png',
-			fail: 'assets/img/fail.png',
-		};
-		this.path = 'assets/question.php';
+		try {
+			this.form = document.querySelectorAll(forms)[idx];
+			this.inputs = this.form.querySelectorAll('input');
+			this.message = {
+				loading: 'Загрузка...',
+				success: 'Спасибо! Скоро мы с вами свяжемся',
+				failure: 'Что-то пошло не так...',
+				spinner: 'assets/img/spinner.gif',
+				ok: 'assets/img/ok.png',
+				fail: 'assets/img/fail.png',
+			};
+			this.path = 'assets/question.php';
+		} catch (e) {
+			console.log(e);
+		}
 	}
 
 	clearInputs() {
@@ -133,8 +137,12 @@ export default class Forms {
 	}
 
 	init() {
-		this.checkMailInputs();
-		this.initMask();
-		this.submitForm(this.form);
+		try {
+			this.checkMailInputs();
+			this.initMask();
+			this.submitForm(this.form);
+		} catch (e) {
+			console.log(e);
+		}
 	}
 }
