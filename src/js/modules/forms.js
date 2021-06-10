@@ -1,5 +1,3 @@
-import Requests from '../services/requests';
-
 export default class Forms {
 	constructor(forms, idx = 0) {
 		this.form = document.querySelectorAll(forms)[idx];
@@ -21,24 +19,91 @@ export default class Forms {
 		});
 	}
 
-	myFunc(form) {
-		console.log('My func start');
+	checkMailInputs() {
+		const mailInputs = document.querySelectorAll('[type="email"]');
+
+		mailInputs.forEach((input) => {
+			input.addEventListener('keypress', function (e) {
+				if (e.key.match(/[^a-z 0-9 @ \.]/gi)) {
+					e.preventDefault();
+				}
+			});
+		});
+	}
+
+	initMask() {
+		let setCursorPosition = (pos, elem) => {
+			elem.focus();
+
+			if (elem.setSelectionRange) {
+				elem.setSelectionRange(pos, pos);
+			} else if (elem.createTextRange) {
+				let range = elem.createTextRange();
+
+				range.collapse(true);
+				range.moveEnd('character', pos);
+				range.moveStart('character', pos);
+				range.select();
+			}
+		};
+
+		function createMask(event) {
+			let matrix = '+1(___) ___-____;',
+				i = 0,
+				def = matrix.replace(/\D/g, ''),
+				val = this.value.replace(/\D/g, '');
+			if (def.length >= val.length) {
+				val = def;
+			}
+			this.value = matrix.replace(/./g, function (a) {
+				return /[_\d]/.test(a) && i < val.length ? val.charAt(i++) : i >= val.length ? '' : a;
+			});
+
+			if (event.type === 'blur') {
+				if (this.value.langth === 2) {
+					this.value = '';
+				}
+			} else {
+				setCursorPosition(this.value.length, this);
+			}
+		}
+
+		let inputs = document.querySelectorAll('[name="phone"]');
+
+		inputs.forEach((input) => {
+			input.addEventListener('input', createMask);
+			input.addEventListener('focus', createMask);
+			input.addEventListener('blur', createMask);
+		});
+	}
+
+	async postData(url, data) {
+		let res = await fetch(url, {
+			method: 'POST',
+			body: data,
+		});
+		return await res.text();
+	}
+
+	submitForm(form) {
 		form.addEventListener('submit', (e) => {
 			e.preventDefault();
 
 			let statusMessage = document.createElement('div');
 			statusMessage.classList.add('status');
-			statusMessage.style.textAlign = 'center';
+			statusMessage.style.cssText = `
+      text-align: center;
+      font-size: 18px;
+      color: grey;
+      `;
 
 			form.parentNode.appendChild(statusMessage);
-			form.classList.add('animated', 'rotateOutUpRight');
-			setTimeout(() => {
-				form.style.display = 'none';
-			}, 400);
+			form.classList.add('animated', 'fadeIn');
+			form.style.display = 'none';
 
 			let statusImg = document.createElement('img');
 			statusImg.setAttribute('src', this.message.spinner);
-			statusImg.classList.add('animated', 'fadeInUpBig');
+			statusImg.classList.add('animated', 'fadeIn');
 			statusMessage.appendChild(statusImg);
 
 			let textMessage = document.createElement('div');
@@ -47,9 +112,7 @@ export default class Forms {
 
 			this.formData = new FormData(form);
 
-			const req = new Requests(this.path, this.formData);
-			req
-				.postData()
+			this.postData(this.path, this.formData)
 				.then((res) => {
 					console.log(res);
 					statusImg.setAttribute('src', this.message.ok);
@@ -64,19 +127,14 @@ export default class Forms {
 					setTimeout(() => {
 						statusMessage.remove();
 						form.style.display = 'block';
-						form.classList.remove('rotateOutUpRight');
-						form.classList.add('rotateInDownLeft');
-					}, 5000);
+					}, 3000);
 				});
-
-			this.clearInputs();
 		});
-		console.log('My func end');
 	}
 
 	init() {
-		console.log('Start', this.form);
-		this.myFunc(this.form);
-		console.log('End');
+		this.checkMailInputs();
+		this.initMask();
+		this.submitForm(this.form);
 	}
 }
