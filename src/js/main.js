@@ -35,6 +35,7 @@ window.addEventListener('DOMContentLoaded', () => {
 	}).init();
 
 	new VideoPlayer('.showup .play', '.overlay').init();
+	new VideoPlayer('.module__video-item .play', '.overlay').init();
 
 	new Difference('.officerold', '.officer__card-item').init();
 	new Difference('.officernew', '.officer__card-item').init();
