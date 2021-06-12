@@ -3,6 +3,8 @@ import MiniSlider from './modules/slider/slider-mini';
 import VideoPlayer from './modules/playVideo';
 import Difference from './modules/difference';
 import Forms from './modules/forms';
+//import Accordeon from './modules/accordeon';
+import ShowInfo from './modules/showinfo';
 
 window.addEventListener('DOMContentLoaded', () => {
 	new MainSlider({ container: '.page', btns: '.next' }).render();
@@ -43,6 +45,9 @@ window.addEventListener('DOMContentLoaded', () => {
 	new Forms('.form', 0).init();
 	new Forms('.form', 1).init();
 
+	new ShowInfo('.plus').init();
+
+	//new Accordeon('.module__info').init();
 	/* const difference = new Difference('.officerold', '.officernew', '.officer__card-item');
 	difference.init(); */
 });
