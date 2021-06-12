@@ -3,9 +3,7 @@ export default class Difference {
 		try {
 			this.useItems = document.querySelector(officerSelector).querySelectorAll(items);
 			this.useCounter = 0;
-		} catch (e) {
-			console.log(e);
-		}
+		} catch (e) {}
 	}
 
 	bindTriggers(container, counter) {
@@ -38,8 +36,6 @@ export default class Difference {
 		try {
 			this.hideItems(this.useItems);
 			this.bindTriggers(this.useItems, this.useCounter);
-		} catch (error) {
-			console.log(error);
-		}
+		} catch (error) {}
 	}
 }

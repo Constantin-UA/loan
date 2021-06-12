@@ -11,9 +11,7 @@ export default class Slider {
 		this.container = document.querySelector(container);
 		try {
 			this.slides = this.container.children;
-		} catch (e) {
-			console.log(e);
-		}
+		} catch (e) {}
 		this.btns = document.querySelectorAll(btns);
 		this.prev = document.querySelector(prev);
 		this.next = document.querySelector(next);

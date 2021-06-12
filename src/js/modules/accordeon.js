@@ -6,10 +6,6 @@ export default class Accordeon {
 	}
 	init() {
 		try {
-			console.log(this.item);
-			console.log(this.btn);
-			console.log(this.msg);
-
 			this.btn.addEventListener('click', () => {
 				this.msg.style.display = 'flex';
 				this.msg.style.fontSize = '14px';

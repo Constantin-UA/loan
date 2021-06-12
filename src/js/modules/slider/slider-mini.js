@@ -70,8 +70,6 @@ export default class MiniSlider extends Slider {
 			if (this.autoplay) {
 				setInterval(() => this.nextSlide(), 5000);
 			}
-		} catch (e) {
-			console.log(e);
-		}
+		} catch (e) {}
 	}
 }

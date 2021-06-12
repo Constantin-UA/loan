@@ -5,6 +5,7 @@ import Difference from './modules/difference';
 import Forms from './modules/forms';
 //import Accordeon from './modules/accordeon';
 import ShowInfo from './modules/showinfo';
+import Download from './modules/download';
 
 window.addEventListener('DOMContentLoaded', () => {
 	new MainSlider({ container: '.page', btns: '.next' }).render();
@@ -46,6 +47,8 @@ window.addEventListener('DOMContentLoaded', () => {
 	new Forms('.form', 1).init();
 
 	new ShowInfo('.plus').init();
+
+	new Download('.download').init();
 
 	//new Accordeon('.module__info').init();
 	/* const difference = new Difference('.officerold', '.officernew', '.officer__card-item');

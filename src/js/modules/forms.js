@@ -12,9 +12,7 @@ export default class Forms {
 				fail: 'assets/img/fail.png',
 			};
 			this.path = 'assets/question.php';
-		} catch (e) {
-			console.log(e);
-		}
+		} catch (e) {}
 	}
 
 	clearInputs() {
@@ -118,7 +116,6 @@ export default class Forms {
 
 			this.postData(this.path, this.formData)
 				.then((res) => {
-					console.log(res);
 					statusImg.setAttribute('src', this.message.ok);
 					textMessage.textContent = this.message.success;
 				})
@@ -141,8 +138,6 @@ export default class Forms {
 			this.checkMailInputs();
 			this.initMask();
 			this.submitForm(this.form);
-		} catch (e) {
-			console.log(e);
-		}
+		} catch (e) {}
 	}
 }
